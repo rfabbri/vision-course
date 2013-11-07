@@ -1,34 +1,128 @@
-\input{preamble}
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage[bf]{subfigure}
+\usepackage[bf]{caption}
+% Section titles in sans-serif:
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{seagreen}{RGB}{46,139,87}
+\definecolor{codebg}{RGB}{255,255,150}
+\usepackage{listings}
+\usepackage[colorlinks]{hyperref}
+\usepackage{url}	
+
+\hypersetup{%
+  citecolor=blue,
+  linkcolor=blue,
+  urlcolor=blue,
+}%
+
+
+
+\lstset{
+  extendedchars=\true,
+  inputencoding=utf8,
+  language=Matlab,
+  %showstringspaces=false,
+  formfeed=\newpage,
+  tabsize=4,
+  %commentstyle=\itshape,
+  basicstyle=\ttfamily\scriptsize,
+  %basicstyle={\small\fontfamily{fvm}\fontseries{m}\selectfont},
+  commentstyle=\color{Apricot}\bfseries,
+  %commentstyle=\color{red}\itshape,
+  stringstyle=\color{red},
+  identifierstyle=\color{PineGreen},
+  showstringspaces=false,
+  keywordstyle=\color{blue}\bfseries,
+  moredelim=[il][\large\textbf]{\#\# },
+  morekeywords={models,range},
+  numbers=left,
+  numbersep=2pt,
+  numberstyle=\tiny,%\color{blue}\bfseries,
+  backgroundcolor=\color{codebg},
+  literate=%
+  {ã}{{\~a}}1
+  {â}{{\^a}}1
+  {õ}{{\~o}}1
+  {á}{{\'a}}1
+  {ú}{{\'u}}1
+  {í}{{\'i}}1
+  {é}{{\'e}}1
+  {Ç}{{\c{C}}}1
+  {Õ}{{\~O}}1
+  {Ê}{{\^E}}1
+  {ó}{{\'o}}1
+  {à}{{\`a}}1
+  {Â}{{\^A}}1
+  {ô}{{\^o}}1
+  {ê}{{\^e}}1
+  {ç}{{\c{c}}}1
+}
+
+\newcommand{\code}[2]{
+ \vspace{1em}
+ \subsubsection*{#1}
+ \lstinputlisting{#2}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You have two versions of the macro
+% \draftnote{My note}. The first version puts notes (e.g. My note in the example)
+% into the margin of your document. The second formats the note as nothing. You
+% 'comment out' the version of the macro you don't want (using a % at the
+% beginning of the line).
+\newcommand{\draftnote}[1]{\marginpar{\tiny\raggedright\textsf{\hspace{0pt}#1}}}
+%\newcommand{\draftnote}[1]{}
+
+% This one is just for the comments for in-line text.
+\newcommand{\indraftnote}[1]{\textcolor[HTML]{114406}{\texttt{\footnotesize[#1]}}}
+%\newcommand{\indraftnote}[1]{}
+\newcommand{\todo}[1]{\indraftnote{todo: #1}}
+
 
 \begin{document}
 
-\title{Computer Vision Lab \#1: Pointwise Image Processing} 
+\title{\textsf{Computer Vision Lab \#1\\ Pointwise Image Processing}
+\marginpar{\vspace{-1.2cm}\includegraphics[height=1.4cm] {figs/logo_uerj_cor_small.png}}} 
 
-\author{Ricardo Fabbri and Others \and Based on EN161 Image
-Understanding 2011 course material from Brown University}
+\author{Prof.\ Ricardo Fabbri, Ph.D.\footnote{Based on EN161 Image Understanding
+2011 course material from Brown University}\\[1em]
+Polytechnic Institute at the Rio de Janeiro State University\\
+\url{http://wiki.nosdigitais.teia.org.br/CV}
+}
+ 
 
-
-Your goal of this first lab is to 
-
-\begin{itemize}
+\date{\today}
+\maketitle
+\begin{abstract}
+\noindent\begin{itemize}
 \item Familiarize with the Scilab image
 processing toolbox (SIP).
 \item Implement pointwise image processing operations such as thresholding,
-sampling, quantization, and enhancements
+sampling, quantization, and enhancements.
 \end{itemize}
+\end{abstract}
+\vspace{2em}
+
+
 
 The images you will need for the lab can be downloaded from the course
-website
-http://wiki.nosdigitais.teia.org.br/CV
+website.
 
-\section{Introduction to the Scilab Image Processing toolbox (SIP)}
+\section{The Scilab Image Processing toolbox (SIP)}
 
 \paragraph{Initial tasks:}
 \begin{enumerate}
 \item Install Scilab and SIP. You will need Linux or Mac OSX.
 \item Go through the SIP demos and make sure you understand the \texttt{imshow, imread,
 imwrite}, and the other commands showcased in the demo.
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 exec(SIPDEMO);
 \end{lstlisting}
 \item Read our paper about the toolbox and type in the commands~\cite{SIP}.
