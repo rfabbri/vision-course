@@ -87,6 +87,12 @@
 \newcommand{\indraftnote}[1]{\textcolor[HTML]{114406}{\texttt{\footnotesize[#1]}}}
 %\newcommand{\indraftnote}[1]{}
 \newcommand{\todo}[1]{\indraftnote{todo: #1}}
+\newcommand{\ie}{{\it i.e.}}
+\newcommand{\etc}{{\it etc}}
+\newcommand{\eg}{{\it e.g.}}
+\newcommand{\wrt}{{\it w.r.t. }}
+\newcommand{\etal}{{\it et.\ al.\ }}
+\newcommand{\etalf}{{\it et.\ al.}}
 
 
 \begin{document}
@@ -94,8 +100,8 @@
 \title{\textsf{Computer Vision Lab \#1\\ Pointwise Image Processing}
 \marginpar{\vspace{-1.2cm}\includegraphics[height=1.4cm] {figs/logo_uerj_cor_small.png}}} 
 
-\author{Prof.\ Ricardo Fabbri, Ph.D.\footnote{Based on EN161 Image Understanding
-2011 course material from Brown University}\\[1em]
+\author{Prof.\ Ricardo Fabbri, Ph.D.\footnote{Based on Image Understanding
+2011 lab material from Ben Kimia, Brown University}\\[1em]
 Polytechnic Institute at the Rio de Janeiro State University\\
 \url{http://wiki.nosdigitais.teia.org.br/CV}
 }
@@ -141,14 +147,66 @@ and if it is over $\tau_0$ (where $\tau_0$ is the threshold you have chosen) set
 intensity to 0, otherwise, set to 1. You will need to play with $\tau_0$ to find its
 optimal value. You will probably want to pass it into the function as a
 parameter.
-\code{Threshold Code}{threshold-code.sci}
+\code{Threshold code snippet}{threshold-code.sci}
 \subsection{Bilevel Thresholding}
-Using the snowman image~\cite{img:snow}, perform bilevel thresholding. i.e. set all
+Using the snowman image~\ref{fig:snow}, perform bilevel thresholding. i.e. set all
 pixels with intensity between $\tau_0$ and $\tau_1$ to 255 and set all pixels
 less than $\tau_0$ 
 to 0 and all pixels greater than $\tau_1$ to 0. The snowman is the region of interest,
 you are thresholding for (where bob is, should be all white and the rest should
 be black).
 
+\section{Contrast / Inversion}
+
+\subsection{Brightness and Clipping} Increase the brightness of the image~\ref{fig:img3} by 10\% 
+or decrease the brightness of the original by 10\% by adding/subtracting a value
+$(I_0=25)$ from each pixel intensity. Try different values of $I_0$.
+\paragraph{Hint:} Make sure you deal with values that fall outside the range of
+the image (clipping).
+
+\subsection{Color Image Inversion} Invert the white blood cell
+image~\ref{fig:inverted} in RGB.
+\paragraph{Hint:} Make sure pixel intensities are not negative
+
+\section{Quantization: Reducing the number of colors}
+The current cell image~\ref{fig:img1} has 256 possible values of pixel
+intensity (but normalized from 0 to 1 \texttt{double} type in Scilab). 
+Reduce
+this to 8 levels (again normalized from 0 to 1). Make some observations about the quantization levels and image
+quality. Do this by grouping intensity regions, \ie, set the intensity of all
+pixels with current intensity between 0-31 to 16, between 32-63 to 48, 64-95 to
+80,...etc.  How would you do this for 16 levels?
+
+\section{Sub-Sampling}
+Reduce the sampling of the white blood cells in image~\ref{fig:img1} by skipping
+every other element.
+\code{Sub-Sampling  code snippet}{sampling-code.sci}
+
+\section{Playing with a Camera}
+
+This lab will also give you a chance to become familiar with a digital video camera.
+Use your own digital camera, smartphone, (or come by the visual computing and
+computer graphics lab (room 110 at
+\textsc{iprj/uerj}) to set up
+a time to use the lab's digital video cameras such as the Sony PS3 Eye or 
+an advanced surveillance camera) to take a few pictures or video clips, and upload them
+to the computer. You will use this imagery for the next set of problems.
+
+\subsection{Sensor noise}
+
+\begin{enumerate}
+\item Take at least 20 images (or a video with at least 20 frames) with your digital camera 
+of the \textit{same} scene under the \textit{same}
+illumination condition. Make sure \emph{nothing} changes in between taking these
+images, so using a tripod a camera hooked up to your laptop is best.
+\item Show the mean image and the standard deviation image. Scilab functions 
+such as \texttt{mean()} and \texttt{std()} are available
+\item Show the maximum difference from this mean image. How big is this? Does this depend
+on the mean?
+\item Pick one pixel across the 20 images, and plot the histogram,
+\texttt{imhist()}. Discuss what the distribution of pixel intensity looks like.  \emph{Why does it
+look like that?}
+\item Repeat under a different lighting condition (light vs dark).
+\end{enumerate}
 
 \end{document}
