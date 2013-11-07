@@ -6,8 +6,11 @@
 \usepackage[bf]{caption}
 % Section titles in sans-serif:
 \usepackage{sectsty}
+\usepackage{abstract}
 \allsectionsfont{\sffamily}
 
+%\renewcommand{\abstractname}{\textsf{Abstract} xxxx}
+\renewcommand{\abstractnamefont}{\bfseries\textsf}
 
 \usepackage[usenames,dvipsnames]{color}
 \definecolor{seagreen}{RGB}{46,139,87}
@@ -140,7 +143,7 @@ optimal value. You will probably want to pass it into the function as a
 parameter.
 \code{Threshold Code}{threshold-code.sci}
 \subsection{Bilevel Thresholding}
-Using the snowman image 2, perform bilevel thresholding. i.e. set all
+Using the snowman image~\cite{img:snow}, perform bilevel thresholding. i.e. set all
 pixels with intensity between $\tau_0$ and $\tau_1$ to 255 and set all pixels
 less than $\tau_0$ 
 to 0 and all pixels greater than $\tau_1$ to 0. The snowman is the region of interest,
