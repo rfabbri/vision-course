@@ -141,7 +141,15 @@ SIP and Scilab may be different.
 
 \section{Thresholding}
 
-\subsection{Basics} Using the white blood cell image1 as seen below, threshold it to make any
+\begin{figure}
+\centering
+\includegraphics[width=0.5\linewidth]{figs/white_blood_cells.png}%
+\caption{% 
+White blood cells
+}\label{fig:img1}
+\end{figure}
+
+\subsection{Basics} Using the white blood cell image~\ref{fig:img1} as seen below, threshold it to make any
 non-cell area black. To do this, you will need to check each pixel in the image,
 and if it is over $\tau_0$ (where $\tau_0$ is the threshold you have chosen) set the pixel’s
 intensity to 0, otherwise, set to 1. You will need to play with $\tau_0$ to find its
@@ -149,24 +157,52 @@ optimal value. You will probably want to pass it into the function as a
 parameter.
 \code{Threshold code snippet}{threshold-code.sci}
 \subsection{Bilevel Thresholding}
-Using the snowman image~\ref{fig:snow}, perform bilevel thresholding. i.e. set all
+Using the snowman image~\ref{fig:img2}, perform bilevel thresholding. i.e. set all
 pixels with intensity between $\tau_0$ and $\tau_1$ to 255 and set all pixels
 less than $\tau_0$ 
 to 0 and all pixels greater than $\tau_1$ to 0. The snowman is the region of interest,
 you are thresholding for (where bob is, should be all white and the rest should
 be black).
 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\linewidth]{figs/snowman.jpg}%
+\caption{% 
+Snowman image to practice thresholding. Notice \textsc{jpeg} compression artifacts as well.
+}\label{fig:img2}
+\end{figure}
+
+
 \section{Contrast / Inversion}
 
 \subsection{Brightness and Clipping} Increase the brightness of the image~\ref{fig:img3} by 10\% 
 or decrease the brightness of the original by 10\% by adding/subtracting a value
 $(I_0=25)$ from each pixel intensity. Try different values of $I_0$.
+
+\begin{figure}
+\centering
+\includegraphics{figs/ImageA.jpg}%
+\caption{% 
+A poor contrast image
+}\label{fig:img3}
+\end{figure}
+
 \paragraph{Hint:} Make sure you deal with values that fall outside the range of
 the image (clipping).
 
 \subsection{Color Image Inversion} Invert the white blood cell
-image~\ref{fig:inverted} in RGB.
+image~\ref{fig:img1} in RGB. You should get something around the lines of
+the sample in figure~\ref{fig:img4}
 \paragraph{Hint:} Make sure pixel intensities are not negative
+\begin{figure}
+\centering
+\includegraphics[trim=40mm 40mm 40mm 40mm, clip, width=0.5\linewidth]{figs/white_blood_cells-inverted.png}%
+\caption{% 
+Sample section of one possible color inversion of the image in figure~\ref{fig:img1}.
+}\label{fig:img4}
+\end{figure}
+
+
 
 \section{Quantization: Reducing the number of colors}
 The current cell image~\ref{fig:img1} has 256 possible values of pixel
