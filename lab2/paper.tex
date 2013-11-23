@@ -132,9 +132,9 @@ Figure~\ref{fig:img5}.
 \includegraphics[width=0.8\linewidth]{figs/line-hough.png}%
 \caption{% 
 (left) Checkerboard image (right) Sample output of line Hough transform
-}\label{fig:img1}
+}\label{fig:img5}
 \end{figure}
-We will use the normal form of a line, Equation~\ref{eq:eq5} as explained in
+We will use the normal form of a line, Equation~\ref{eq:eq5}, as explained in
 class
 \begin{equation}\label{eq:eq5}
 \rho = x\cos\theta + y\sin\theta
@@ -143,26 +143,36 @@ The pseudocode for the Hough transform algorithm is as follows
 
 \includegraphics[width=1\linewidth]{figs/alg-hough-lines.png}%
 
-Some comments on lines of the algorithm:
+\paragraph{Some comments on lines of the algorithm:}
 \begin{itemize}
 \item[Line 1:] This is the output of a gradient-based edge
-detector. You can use SIP's \texttt{edge} function with the Sobel operator
+detector. You can use SIP's \texttt{edge} function with the Sobel operator. Does
+the algorithm work better if you use \texttt{thin} on top of the edge image?
+Show the edge images for all results.
 \item[Line 2:] When you define these arrays you are discretizing the parameter
-space of $\rho$ and $\theta$ using steps of $\delta \rho$ and $\delta
+space of $\rho$ and $\theta$ using steps of $\Delta \rho$ and $\Delta
 \theta$. Choose appropriate step sizes that yield acceptable and manageable
-resolution of the parameter space
+resolution of the parameter space.
 \item[Line 9:] The value computed for $\rho$ will not exactly be in your
 parameter space, so you have to choose either to round, ceil, or floor the value.
 \item[Line 15:] When defining your threshold, think about how many edge points would
-have to vote for a line
+have to vote for a line.
 \end{itemize}
 Requirement for your report:
 \begin{enumerate}
 \item Display your accumulator space A as an image. This is also called a
 sinogram.
 \item Plot all lines found on top of 3 different images of your choice
-(buildings, mechanical pieces). You can use SIP's \texttt{imshow} followed by a
+(buildings, mechanical pieces), such as those in
+Figure~\ref{fig:line:hough:imgs}. You can use SIP's \texttt{imshow} followed by a
 plot command, as long as you set the plot to be persistent.
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figs/images-for-line-hough.png}%
+\caption{% 
+You should run your line detection algorithm on these images or very similar ones.
+}\label{fig:line:hough:imgs}
+\end{figure}
 \item What does an edge point $(x,y)$ in the image correspond to in the $(\rho,
 theta)$ parameter space?
 \item Comment on the effect of discretization of the parameter space, and the
@@ -178,23 +188,32 @@ general approach that we can use to detect any shape that has (short) a
 parametric form! We sill use the same aforementioned approach but now to detect
 circles, see Figure~\ref{fig:hough:circles}.  A circle with radius $r$ and
 center $(a,b)$ can be described with parametric equations,
-Eq.~\ref{eq:circle:parametric}j
-\begin{align}\label{eq:circle:parametric}
-x &= a + r\cos\theta
-y &= b + r\cos\theta.
-\end{align}
-If an image contains many point $(x,y)$, some of which fall on the perimeters of
+Eq.~\ref{eq:circle:parametric}.
+\begin{equation}\label{eq:circle:parametric}
+\left\{\begin{aligned}
+x &= a + r\cos\theta\\
+y &= b + r\cos\theta
+\end{aligned}\right.
+\end{equation}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{figs/circular-hough.png}%
+\caption{% 
+(left) Input of coins, (right) Sample output of circle Hough transform.
+}\label{fig:hough:circles}
+\end{figure}
+If an image contains many points $(x,y)$, some of which fall on the perimeters of
 circles, then the job of the search program is to find parameter triplets
 $(a,b,r)$ to describe each circle. We will use the same approach as in Algorithm
 2 for lines.
 Some comments on lines of the Hough algorithm:
 \begin{itemize}
 \item[Line 2:] Here you will have three arrays that define the discretization
-off $a_d, b_d, r_d$.
+of $a_d, b_d, r_d$.
 \item[Line 3:] Your accumulator will be a 3D matrix of all zeros, again, the
 size of it will be
 $\text{length}(a_d)\times\text{length}(b_d)\times\text{length}(r_d)$, the 3D
-case will eb more expensive in terms of both time and memory, so be
+case will be more expensive in terms of both time and memory, so be
 judicious in your discretization of the parameter space
 \item[Line 7:] To evaluate Equation~\ref{eq:circle:parametric} you will have two
 loops instead of one, one loop will be over $r_d$ and the other will be over a
@@ -218,6 +237,24 @@ demo).
 $(a,b,r)$ parameter space?
 \item Comment on the effect of discretization of the parameter space, and the
 threshold you used
+\end{enumerate}
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figs/images-for-circle-hough.png}%
+\caption{% 
+You should run your circle detection algorithm on these images or very similar ones.
+}\label{fig:images:circle:hough}
+\end{figure}
+
+\section{Comparison with OpenCV}
+\begin{enumerate}
+\item Install OpenCV from Git following instructions at \url{http://wiki.nosdigitais.teia.org.br/OpenCV}
+\item Learn how to run OpenCV hough transform functions from the commandline,
+for both circles and lines
+\item Compare the results and performance with your implementation. Report
+running times and mainly on the quality of the output.
+\item Bonus: open the source code for the hough transform in OpenCV. What can
+you identify? Describe two optimization tricks being used.
 \end{enumerate}
 
 \paragraph{Bonus Challenge -- Accelerated Hough Transform -- 3 extra points} One way of reducing the
